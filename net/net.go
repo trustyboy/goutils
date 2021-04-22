@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-func DownloadFile(url string, fileName string) error {
-	bExist, _ := ioutil.PathExists("images/" + fileName)
+func DownloadFile(url string, savePath string, fileName string) error {
+	bExist, _ := ioutil.PathExists(savePath + "/" + fileName)
 	if bExist {
 		return nil
 	}
@@ -16,11 +16,8 @@ func DownloadFile(url string, fileName string) error {
 	if err != nil {
 		return err
 	}
-	bExist, _ = ioutil.PathExists("./images")
-	if !bExist {
-		os.Mkdir("./images", os.ModePerm)
-	}
-	fs, err := os.Create("images/" + fileName)
+	_ = os.MkdirAll(savePath, os.ModePerm)
+	fs, err := os.Create(savePath + "/" + fileName)
 	if err != nil {
 		return err
 	}
